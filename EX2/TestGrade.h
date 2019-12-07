@@ -1,8 +1,8 @@
 
 // Communication_Thread.h
 
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __TESTGRADE_H__
+#define __TESTGRADE_H__
 
 
 // Includes --------------------------------------------------------------------

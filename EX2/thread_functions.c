@@ -7,7 +7,7 @@
 #include <string.h>
 #include <windows.h>
 #include <stdlib.h>
-#include "Testgrades.h"
+#include "thread_functions.h"
 
 
 // Constants -------------------------------------------------------------------

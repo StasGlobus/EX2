@@ -3,8 +3,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <windows.h>
-#include "Testgrades.h"
-#include "main.h"
+#include "thread_functions.h"
+#include "TestGrade.h"
 
 
 

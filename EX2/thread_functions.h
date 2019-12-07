@@ -1,9 +1,9 @@
 
 // IO_Thread.h
 
-#ifndef __TESTGRADES_H__
-#define __TESTGRADES_H__
-#include "main.h"
+#ifndef __THREAD_FUNCTIONS_H__
+#define __THREAD_FUNCTIONS_H__
+#include "TestGrade.h"
 #define MAX_STRING 50
 //#define FILE_TYPES 13
 #define FILENAME 20

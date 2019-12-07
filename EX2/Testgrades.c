@@ -102,6 +102,7 @@ float CalculateGrade(int grades_array[])
 DWORD WINAPI GetGradesThread(LPVOID lpParam)//, char *dir)
 {
 	Sleep(10);
+	FILE *fp;
 	HANDLE p_thread_handles[FILE_TYPES];
 	DWORD p_thread_ids[FILE_TYPES];
 	DWORD exit_code;
@@ -113,22 +114,16 @@ DWORD WINAPI GetGradesThread(LPVOID lpParam)//, char *dir)
 					"ex06.txt","ex07.txt","ex08.txt","ex09.txt","ex10.txt",
 					"midterm.txt","moedA.txt","moedB.txt" };
 	char temp_dir[FILE_TYPES][MAX_STRING] = { '\0' };
-	/*
-	for (int i = 0; i < FILE_TYPES; i++) {
-		
-		strcpy(temp_dir[i], grades->dir);
-		strcat(temp_dir[i], file_names[i]);
-		strcpy(file_names[i], temp_dir[i]);
-	}
-	*/
-	
+	char slashes[2] = "\\";
+	char output[MAX_STRING] = { '\0' };
 
-	
 	//open each thread to look for specific file
 	for (int i = 0; i < FILE_TYPES; i++) {
 
 		
 		strcpy(temp_dir[i], grades->dir);
+		strcat(temp_dir[i], grades->id);
+		strcat(temp_dir[i], slashes);
 		strcat(temp_dir[i], file_names[i]);
 		p_thread_handles[i] = CreateThreadSimple(PullGrade, temp_dir[i], &p_thread_ids[i]);
 		
@@ -145,9 +140,17 @@ DWORD WINAPI GetGradesThread(LPVOID lpParam)//, char *dir)
 	grades->grade_value = local_grades;
 	final_grade = CalculateGrade(local_grades);
 	printf("the final grade is%.2f", final_grade);
-	getchar();
-
-	
+	strcpy(output, grades->dir);
+	strcat(output, grades->id);
+	strcat(output, slashes);
+	strcat(output, "final_");
+	strcat(output, grades->id);
+	strcat(output, ".txt");
+	fp = fopen(output, "w");
+	if (NULL != fp) {
+		fprintf(fp, "%0.2f\n", final_grade);
+	}
+	fclose(fp);
 	return 0;
 }
 

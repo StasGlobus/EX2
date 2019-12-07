@@ -10,16 +10,15 @@
 
 
 void* Grades_default(Grades *grades) {
+
 	grades->dir = (char*)malloc(MAX_STRING * sizeof(char));
-	//grades->grade_type = (int*)malloc(sizeof(int));
-	grades->grade_value =(int*)calloc(FILE_TYPES, sizeof(int));
+	grades->id = (char*)malloc(ID * sizeof(char));
+	grades->grade_value = (int*)calloc(FILE_TYPES, sizeof(int));
 	strcpy(grades->dir, DIR);
-	//grades->grade_type = 0;
-	//grades->grade_value = { 0 };
-	//return grades;
+	
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 	HANDLE p_thread_handles[NUM_THREADS];
 	DWORD p_thread_ids[NUM_THREADS];
@@ -27,25 +26,23 @@ int main()
 	BOOL ret_val;
 	size_t i;
 	Grades *grades;
+	char id[ID] = { '\0' };
+	if (argc > 2) {
+		printf("Too many arguments supplied.\n");
+	}
+	else if (argc < 2) {
+		printf("One argument expected.\n");
+	}
+	memcpy(&id, argv[1], ID);
+
+	
 	
 
 	grades = (Grades *)malloc(sizeof(Grades));// multiply by the amount of ID's in the filr
 	Grades_default(grades);
+	strcpy(grades->id, id); //Integration  chage it to argv later.
 	// Temp Setup, need to move it to function, maybe should allocate space first
 
-	/*
-	grades.dir = (char*)malloc(MAX_STRING * sizeof(char));
-	grades.grade_type = (int*)malloc(sizeof(int));
-	grades.grade_value = (int*)malloc(sizeof(int));
-	strcpy(grades.dir, DIR);
-	grades.grade_type = 0;
-	grades.grade_value = 0;//= Grades_default(grades);// , *p_grades;
-	*/
-	//grades->dir = malloc(MAX_STRING * sizeof(char));
-	//strcpy(grades->dir, DIR);
-	//p_grades = &grades;
-
-	
 	// a separate thread will be opend for each ID
 	p_thread_handles[0] = CreateThreadSimple(GetGradesThread, grades, &p_thread_ids[0]);
 	
@@ -80,7 +77,7 @@ int main()
 			return ERROR_CODE;
 		}
 	}
-	getchar();
+	//getchar();
 	return 0;
 }
 HANDLE CreateThreadSimple(LPTHREAD_START_ROUTINE p_start_routine,
@@ -113,40 +110,3 @@ HANDLE CreateThreadSimple(LPTHREAD_START_ROUTINE p_start_routine,
 
 	return thread_handle;
 }
-/*
-HANDLE CreateThreadSimple(LPTHREAD_START_ROUTINE p_start_routine,
-	LPDWORD p_thread_id, Grades *grades)
-{
-	HANDLE thread_handle;
-
-	if (NULL == p_start_routine)
-	{
-		printf("Error when creating a thread");
-		printf("Received null pointer");
-		exit(ERROR_CODE);
-	}
-
-	if (NULL == p_thread_id)
-	{
-		printf("Error when creating a thread");
-		printf("Received null pointer");
-		exit(ERROR_CODE);
-	}
-	*/
-	//thread_handle = CreateThread(
-		//NULL,            /*  default security attributes */
-		//0,               /*  use default stack size */
-		//p_start_routine, /*  thread function */
-	//	grades,            /*  argument to thread function */// chanege it to dir
-	//	0,               /*  use default creation flags */
-	//	p_thread_id);    /*  returns the thread identifier */
-/*
-	if (NULL == thread_handle)
-	{
-		printf("Couldn't create thread\n");
-		exit(ERROR_CODE);
-	}
-
-	return thread_handle;
-}
-*/

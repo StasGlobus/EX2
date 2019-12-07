@@ -25,16 +25,10 @@
 
 // Function Declarations -------------------------------------------------------
 
-/*
-* IO thread. This thread is in charge of the user interface.
-* Notes:
-*   The thread calls the Echo function in a loop.
-*   If the user enters "exit", the thread exits.
-*   Not all threads are an eternal loop. This is just for
-*   for the sake of this example.
-*/
-//DWORD WINAPI GetGradesThread(LPVOID lpParam);
 DWORD WINAPI PullGrade(LPVOID lpParam);
+int find_minimum(int array[], int array_size);
+float Average(int sum, int size);
+float CalculateGrade(int grades_array[]);
 
 
 

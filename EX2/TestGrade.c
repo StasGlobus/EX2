@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	//getchar();
+	free(grades);
 	return 0;
 }
 HANDLE CreateThreadSimple(LPTHREAD_START_ROUTINE p_start_routine,

@@ -80,6 +80,8 @@ int main()
 			return ERROR_CODE;
 		}
 	}
+	getchar();
+	return 0;
 }
 HANDLE CreateThreadSimple(LPTHREAD_START_ROUTINE p_start_routine,
 	LPVOID p_thread_parameters,

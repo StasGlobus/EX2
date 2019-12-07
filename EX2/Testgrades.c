@@ -46,7 +46,7 @@ DWORD WINAPI GetGradesThread(LPVOID lpParam)//, char *dir)
 	char file_names[FILE_TYPES][FILENAME] = { "ex01.txt","ex02.txt","ex03.txt","ex04.txt","ex05.txt",
 					"ex06.txt","ex07.txt","ex08.txt","ex09.txt","ex10.txt",
 					"midterm.txt","moedA.txt","moedB.txt" };
-	char temp_dir[MAX_STRING] = { '\0' };
+	char temp_dir[FILE_TYPES][MAX_STRING] = { '\0' };
 	/*
 	* Convert (void *) to parameters type.
 	* In this example, MATH_THREAD_params_t is a simple struct.
@@ -69,11 +69,11 @@ DWORD WINAPI GetGradesThread(LPVOID lpParam)//, char *dir)
 	for (int i = 0; i < FILE_TYPES; i++) {
 
 		//p_thread_handles[i] = CreateThreadSimple(PullGrade, &p_thread_ids[i], grade->dir);
-		strcpy(temp_dir, grades->dir);
-		strcat(temp_dir, file_names[i]);
-		p_thread_handles[i] = CreateThreadSimple(PullGrade, temp_dir, &p_thread_ids[i]);
+		strcpy(temp_dir[i], grades->dir);
+		strcat(temp_dir[i], file_names[i]);
+		p_thread_handles[i] = CreateThreadSimple(PullGrade, temp_dir[i], &p_thread_ids[i]);
 		Sleep(1);//Integration
-		memset(temp_dir, '\0', MAX_STRING);
+		//memset(temp_dir[i], '\0', MAX_STRING);
 	}
 	DWORD dwRet = WaitForMultipleObjects(FILE_TYPES, p_thread_handles, FALSE, INFINITE);
 	
@@ -92,7 +92,7 @@ DWORD WINAPI PullGrade(LPVOID lpParam)
 	//strcat(file_dir, file_names[0]); // add the result to the new string
 	grade = file(file_dir);
 	printf("%d\n", grade);
-	getchar();
+	//getchar();
 	
 	return 0;
 

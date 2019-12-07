@@ -11,11 +11,11 @@
 
 void* Grades_default(Grades *grades) {
 	grades->dir = (char*)malloc(MAX_STRING * sizeof(char));
-	grades->grade_type = (int*)malloc(sizeof(int));
-	grades->grade_value =(int*)malloc(sizeof(int));
+	//grades->grade_type = (int*)malloc(sizeof(int));
+	grades->grade_value =(int*)calloc(FILE_TYPES, sizeof(int));
 	strcpy(grades->dir, DIR);
-	grades->grade_type = 0;
-	grades->grade_value = 0;
+	//grades->grade_type = 0;
+	//grades->grade_value = { 0 };
 	//return grades;
 }
 

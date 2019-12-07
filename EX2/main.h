@@ -23,10 +23,18 @@ static const char P_EXIT_CMD[] = "exit";
 typedef struct {
 
 	char  *dir;
-	int grade_type;
-	int grade_value;
+	//int grade_type;
+	int *grade_value;
 
-}Grades;
+}Grades; //contains all the grades of a student
+
+typedef struct {
+
+	char  *dir;
+	//int grade_type;
+	int grade;
+
+}One_grade;// holds one grade at a time
 // Function Declarations -------------------------------------------------------
 
 /*

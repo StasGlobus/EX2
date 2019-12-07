@@ -42,27 +42,22 @@ DWORD WINAPI GetGradesThread(LPVOID lpParam)//, char *dir)
 	Sleep(10);
 	HANDLE p_thread_handles[FILE_TYPES];
 	DWORD p_thread_ids[FILE_TYPES];
+	DWORD exit_code;
 	Grades *grades = (Grades *)lpParam;
-	char file_names[FILE_TYPES][FILENAME] = { "ex01.txt","ex02.txt","ex03.txt","ex04.txt","ex05.txt",
+	int ret_val;
+	char file_names[FILE_TYPES][MAX_STRING] = { "ex01.txt","ex02.txt","ex03.txt","ex04.txt","ex05.txt",
 					"ex06.txt","ex07.txt","ex08.txt","ex09.txt","ex10.txt",
 					"midterm.txt","moedA.txt","moedB.txt" };
 	char temp_dir[FILE_TYPES][MAX_STRING] = { '\0' };
 	/*
-	* Convert (void *) to parameters type.
-	* In this example, MATH_THREAD_params_t is a simple struct.
-	* In general, it could be any type:
-	* integer, array, array of struct, string etc.
+	for (int i = 0; i < FILE_TYPES; i++) {
+		
+		strcpy(temp_dir[i], grades->dir);
+		strcat(temp_dir[i], file_names[i]);
+		strcpy(file_names[i], temp_dir[i]);
+	}
 	*/
-	//grades = (Grades *)lpParam;
-
-	//p_params->res = p_params->num1 + p_params->num2;
-
-	//getchar();
-	//Grades *grades = lpParam;
 	
-	//DWORD wait_code;
-	//BOOL ret_val;
-	//size_t i;
 
 	
 	//open each thread to look for specific file
@@ -72,10 +67,19 @@ DWORD WINAPI GetGradesThread(LPVOID lpParam)//, char *dir)
 		strcpy(temp_dir[i], grades->dir);
 		strcat(temp_dir[i], file_names[i]);
 		p_thread_handles[i] = CreateThreadSimple(PullGrade, temp_dir[i], &p_thread_ids[i]);
-		Sleep(1);//Integration
+		
+		//();
+		//Sleep(1);//Integration
 		//memset(temp_dir[i], '\0', MAX_STRING);
 	}
 	DWORD dwRet = WaitForMultipleObjects(FILE_TYPES, p_thread_handles, FALSE, INFINITE);
+	for (int i = 1; i < FILE_TYPES+1; i++) {
+		ret_val = GetExitCodeThread(p_thread_handles[i-1], &exit_code);
+		printf("file %d exit code is %d\n", (i-1), exit_code);
+	}
+	//ret_val = GetExitCodeThread(p_thread_handles[5], &exit_code);
+	//printf("the return value is%d\n", ret_val);
+	getchar();
 	
 	return 0;
 }
@@ -91,9 +95,9 @@ DWORD WINAPI PullGrade(LPVOID lpParam)
 	//memcpy(file_dir, ptr, DIR_SIZE); //copy the part before the left bracket
 	//strcat(file_dir, file_names[0]); // add the result to the new string
 	grade = file(file_dir);
-	printf("%d\n", grade);
+	//printf("%d\n", grade);
 	//getchar();
 	
-	return 0;
+	return grade;
 
 }
